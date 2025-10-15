@@ -1,0 +1,59 @@
+import { createBrowserRouter } from "react-router";
+import Layout from "../layouts/layout";
+import Home from "../pages/homepage";
+import routes from "./routes.min";
+import ErrorPage from "../pages/error";
+import GenrePage from "../pages/genrePage";
+import PlatformPage from "../pages/platformPage";
+import GamePage from "../pages/gamePage";
+import Register from "../pages/register";
+import Login from "../pages/login";
+import AccountSettings from "../pages/account/index";
+import AccountFavorites from "../pages/account/favorites";
+
+const router = createBrowserRouter([
+   {
+      path: routes.home,
+      Component: Layout,
+      children: [
+         {
+            index: true,
+            Component: Home
+         },
+         {
+            path: routes.genres,
+            Component: GenrePage
+         },
+         {
+            path: routes.platforms,
+            Component: PlatformPage
+         },
+         {
+            path: routes.games,
+            Component: GamePage
+         },
+         {
+            path: routes.register,
+            Component: Register
+         },
+         {
+            path: routes.login,
+            Component: Login
+         },
+         {
+            path: routes.settings,
+            Component: AccountSettings
+         },
+         {
+            path: routes.favorites,
+            Component: AccountFavorites
+         },
+         {
+            path: routes.error,
+            Component: ErrorPage
+         }
+      ]
+   }
+]);
+
+export default router;

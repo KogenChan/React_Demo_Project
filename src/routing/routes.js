@@ -1,0 +1,13 @@
+const routes = {
+   home: '/',
+   genres: '/genre/:genreSlug',
+   platforms: '/platform/:platformSlug',
+   games: '/games/:slug/:id',
+   register: '/signup',
+   login: '/login',
+   settings: '/account/settings',
+   favorites: '/account/favorites',
+   error: '*'
+};
+
+export default routes;

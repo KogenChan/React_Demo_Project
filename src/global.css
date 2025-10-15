@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+   themes: light --default, dark --prefersdark, night;
+}
+
+@plugin "daisyui/theme" {
+   name: "night";
+   default: true;
+   --color-base-content: 
+#eaf0ff;
+   --color-base-300: hsl(222, 47%, 6%);
+   --color-base-200: hsl(222, 47%, 11%);
+   --color-base-100: hsl(222, 47%, 21%);
+}
+
+:root {
+  --font-multiplier: 1.1;
+}
+
+html {
+  font-size: calc(16px * var(--font-multiplier));
+}
+
+@layer utilities {
+  .text-xs { @apply !text-[calc(0.75rem*var(--font-multiplier))] }
+  .text-sm { @apply !text-[calc(0.875rem*var(--font-multiplier))] }
+  .text-base { @apply !text-[calc(1rem*var(--font-multiplier))] }
+  .text-lg { @apply !text-[calc(1.125rem*var(--font-multiplier))] }
+  .text-xl { @apply !text-[calc(1.25rem*var(--font-multiplier))] }
+  .text-2xl { @apply !text-[calc(1.5rem*var(--font-multiplier))] }
+  .text-3xl { @apply !text-[calc(1.875rem*var(--font-multiplier))] }
+  .text-4xl { @apply !text-[calc(2.25rem*var(--font-multiplier))] }
+}
+
+@layer utilities {
+  @apply text-[length:calc(var(--font-scale)*1rem)];
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: url(./assets/fonts/Inter-VariableFont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'InterItalic';
+  font-display: swap;
+  src: url(./assets/fonts/Inter-Italic-VariableFont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Anta';
+  font-display: swap;
+  src: url(./assets/fonts/Anta-Regular.ttf) format('truetype');
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3 {
+    font-family: 'Anta', sans-serif;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 80rem;
+}
+
+.dropdown-content a {
+  white-space: nowrap;
+  display: inline-flex;
+  gap: 0;
+}
+
+ul::before {
+  display: none;
+}
