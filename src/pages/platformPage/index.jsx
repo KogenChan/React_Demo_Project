@@ -36,7 +36,7 @@ export default function PlatformPage() {
                   </h1>
                </div>
 
-               {error && <article className="text-red-500">{error}</article>}
+               {error && <article className="text-red-500 px-4">{error}</article>}
 
                {data?.results?.map((item) => (
                   <div

@@ -48,7 +48,7 @@ export default function AccountFavorites() {
       <PrivateRoute>
          <LoaderOverlay loading={loading} />
 
-         <main className="flex justify-center pt-20 pb-10">
+         <main className="flex justify-center content-start flex-wrap pt-20 pb-10">
             <div className="container flex flex-wrap mx-[-16px]">
                <div className="flex justify-between w-full flex-col sm:flex-row px-4">
                   <h1 className="text-3xl md:text-4xl text-accent pt-5 sm:pt-10 lg:pt-20 pb-10 w-100">
@@ -57,7 +57,7 @@ export default function AccountFavorites() {
                </div>
 
                {!loading && games.length === 0 && (
-                  <div className="w-full text-center text-gray-400 px-4 pb-6">
+                  <div className="w-full text-center text-gray-400 px-4 pb-6 min-h-[200px]">
                      You haven't added any favorites yet.
                   </div>
                )}

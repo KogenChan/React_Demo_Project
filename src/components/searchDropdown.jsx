@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, Fragment } from "react";
+import { useState, useRef, useEffect, Fragment, useMemo, useCallback } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 export default function Dropdown({ list, onSelect, value = "All" }) {
@@ -36,17 +36,33 @@ export default function Dropdown({ list, onSelect, value = "All" }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
-  const handleSelect = (item) => {
+  const handleSelect = useCallback((item) => {
     onSelect?.(item);
     setSearchQuery("");
     setIsOpen(false);
-  };
+  }, [onSelect]);
 
-  const filteredItems = list.results.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleToggle = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
 
-  const highlightMatch = (name, query) => {
+  const handleSearchChange = useCallback((e) => {
+    setSearchQuery(e.target.value);
+  }, []);
+
+  // Memoize filtered items to prevent recalculation on every render
+  const filteredItems = useMemo(() => {
+    if (!list?.results) return [];
+    if (searchQuery === "") return list.results;
+    
+    const lowerQuery = searchQuery.toLowerCase();
+    return list.results.filter((item) =>
+      item.name.toLowerCase().includes(lowerQuery)
+    );
+  }, [list?.results, searchQuery]);
+
+  // Memoize highlight function to prevent recreation
+  const highlightMatch = useCallback((name, query) => {
     if (!query) return name;
     const regex = new RegExp(`(${query})`, "gi");
     return name.split(regex).map((part, i) =>
@@ -58,18 +74,18 @@ export default function Dropdown({ list, onSelect, value = "All" }) {
         <Fragment key={i}>{part}</Fragment>
       )
     );
-  };
+  }, []);
 
   return (
     <div ref={dropdownRef} className="relative inline-block">
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="text-[18px] w-full flex justify-end items-center cursor-pointer "
+        onClick={handleToggle}
+        className="text-[18px] w-full flex justify-end items-center cursor-pointer"
       >
         {value}
         <FaChevronDown
-          className={`ml-1 text-[18px] pt-0.5 ${
+          className={`ml-1 text-[18px] pt-0.5 transition-transform ${
             isOpen ? "rotate-180 translate-y-[1px]" : ""
           }`}
         />
@@ -85,7 +101,7 @@ export default function Dropdown({ list, onSelect, value = "All" }) {
             type="text"
             placeholder="Search..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
             className="absolute opacity-0 pointer-events-none"
             tabIndex={-1}
           />
@@ -108,7 +124,7 @@ export default function Dropdown({ list, onSelect, value = "All" }) {
                 <a
                   href="#!"
                   onClick={() => handleSelect(item.name)}
-                  className=" text-xs block pl-3 py-1.5 hover:bg-base-100 rounded-4xl cursor-pointer"
+                  className="text-xs block pl-3 py-1.5 hover:bg-base-100 rounded-4xl cursor-pointer"
                 >
                   {highlightMatch(item.name, searchQuery)}
                 </a>

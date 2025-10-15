@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import CarouselButton from "./carouselButton";
 import CardGame from "./cardGame";
 
@@ -24,14 +24,8 @@ export default function Carousel({ items }) {
          <div
             id="scroll-container"
             ref={scrollRef}
-            className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory mx-[-16px]"
-            style={{
-               scrollbarWidth: "none",
-               msOverflowStyle: "none",
-            }}
+            className={`flex scroll-smooth snap-x snap-mandatory mx-[-16px] min-h-[400px]} overflow-x-hidden`}
          >
-            <style>{`#scroll-container::-webkit-scrollbar {display: none;}`}</style>
-
             {items.map((item) => (
                <div
                   key={item.id}
