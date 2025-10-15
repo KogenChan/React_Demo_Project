@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import { getFieldError } from '../../lib/validationForm';
 import supabase from "../../supabase/supabase-client";
 import routes from "../../routing/routes.min";
-import AuthForm from "../../components/AuthForm";
+import AuthForm from "../../components/authForm";
 import { minLoadingTime } from "../../utils/minLoadingTime.min";
 import { PublicRoute } from "../../routing/protectedRoute";
 

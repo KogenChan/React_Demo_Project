@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import supabase from "../../supabase/supabase-client";
 import { useSession } from "../../context/SessionContext";
 import { useGetProfile } from "../../utils/useGetProfile";
-import AuthForm from "../../components/AuthForm";
+import AuthForm from "../../components/authForm";
 import { minLoadingTime } from "../../utils/minLoadingTime";
 import { getFieldError } from "../../lib/validationForm";
 import LoaderOverlay from "../../components/loaderOverlay";
