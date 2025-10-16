@@ -51,7 +51,7 @@ export default function Home() {
          <main className="flex justify-center pt-20 pb-10 md:pb-20">
             <div className="container px-4">
                <h1 className="text-3xl md:text-4xl text-accent pt-5 sm:pt-10 lg:pt-20 pb-10">
-                  Latest reviews
+                  Latest games
                </h1>
                {gamesError && <article className="text-red-500">{gamesError}</article>}
                
