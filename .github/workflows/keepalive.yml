@@ -1,0 +1,19 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    - cron: '0 */5 * * *'  # Runs every 5 days
+  workflow_dispatch:       # Allows manual trigger
+  
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -X POST \
+            -H "apikey: ${{ secrets.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InluaGx2YXdpYWphanFtdGpuYWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4MzUyNDQsImV4cCI6MjA3NTQxMTI0NH0.hw7jpJdhAGIr-vfhdhoLvs_Rxe1maa2wHOhnokWnqHM }}" \
+            -H "Authorization: Bearer ${{ secrets.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InluaGx2YXdpYWphanFtdGpuYWZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk4MzUyNDQsImV4cCI6MjA3NTQxMTI0NH0.hw7jpJdhAGIr-vfhdhoLvs_Rxe1maa2wHOhnokWnqHM }}" \
+            -H "Content-Type: application/json" \
+            -d '{}' \
+            https://${{ secrets.ynhlvawiajajqmtjnafq }}.supabase.co/rest/v1/rpc/pg_sleep?args
