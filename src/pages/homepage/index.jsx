@@ -8,7 +8,7 @@ import { useGames } from "../../context/GameContext.jsx";
 import LoaderOverlay from "../../components/loaderOverlay";
 
 const CardSkeleton = () => (
-   <div className="card bg-base-100 rounded-xs h-full animate-pulse">
+   <div className="card bg-base-100 rounded-xs h-[400px] animate-pulse">
       <figure className="relative w-full bg-base-300 aspect-video" />
       <div className="card-body min-h-[186px]">
          <div className="h-6 bg-base-300 rounded w-3/4 mb-2" />
@@ -54,15 +54,17 @@ export default function Home() {
                   Latest games
                </h1>
                {gamesError && <article className="text-red-500">{gamesError}</article>}
-               
+
                <div className="min-h-[400px]">
                   {!games?.results ? (
-                     <div className="flex overflow-x-auto mx-[-16px]">
-                        {[...Array(4)].map((_, i) => (
-                           <div key={i} className="shrink-0 w-[100%] sm:w-[50%] lg:max-w-[33.33%] xl:w-[25%] px-4">
-                              <CardSkeleton />
-                           </div>
-                        ))}
+                     <div className="mb-[34px] md:mb-0">
+                        <div className="flex overflow-x-auto mx-[-16px]">
+                           {[...Array(4)].map((_, i) => (
+                              <div key={i} className="shrink-0 w-[100%] sm:w-[50%] lg:max-w-[33.33%] xl:w-[25%] px-4">
+                                 <CardSkeleton />
+                              </div>
+                           ))}
+                        </div>
                      </div>
                   ) : recentGames ? (
                      <Carousel items={recentGames} />

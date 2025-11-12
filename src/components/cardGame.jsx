@@ -9,7 +9,7 @@ export default function CardGame({ game }) {
    const genres = game.genres.map((genre) => genre?.name || 'n/a').join(', ');
 
    return (
-      <div className="card bg-base-100 rounded-xs h-full flex flex-col" key={game.id}>
+      <div className="card bg-base-100 rounded-xs h-[400px] flex flex-col" key={game.id}>
          <figure className="relative w-full aspect-video">
             <LazyLoadGameImage image={game.background_image} className={'aspect-16/9'} />
          </figure>
