@@ -1,8 +1,7 @@
 name: Keep Supabase Alive
-
 on:
   schedule:
-    - cron: "0 */120 * * *"  # runs every 5 days (120 hours)
+    - cron: "0 0 */5 * *"
   workflow_dispatch:
 
 jobs:
