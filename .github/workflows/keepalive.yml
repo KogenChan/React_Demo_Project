@@ -1,7 +1,7 @@
 name: Keep Supabase Alive
 on:
   schedule:
-    - cron: "0 */8 * * *"  # Run every 8 hours instead of twice weekly
+    - cron: "0 */8 * * *"
   workflow_dispatch:
 
 jobs:
@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Generate Supabase Activity
         run: |
+          echo "Starting Supabase activity generation..."
+          
           # Multiple read operations
           curl -f -X GET \
             "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?select=*&limit=10" \
@@ -18,24 +20,28 @@ jobs:
           
           sleep 2
           
-          # Query with filters (more complex query)
           curl -f -X GET \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?select=*&order=created_at.desc&limit=5" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/profiles?select=*&order=updated_at.desc.nullslast&limit=5" \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
           
           sleep 2
           
-          # Write operation - insert and immediately delete a heartbeat record
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          # Insert heartbeat
-          RESPONSE=$(curl -X POST \
+          # Write operation - insert heartbeat
+          curl -f -X POST \
             "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat" \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Content-Type: application/json" \
-            -H "Prefer: return=representation" \
-            -d "{\"pinged_at\": \"$TIMESTAMP\"}")
+            -H "Prefer: return=minimal" \
+            -d '{}'
           
-          echo "Activity generated successfully at $TIMESTAMP"
+          sleep 2
+          
+          # Another read operation
+          curl -f -X GET \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/heartbeat?select=*&order=pinged_at.desc&limit=5" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
+          
+          echo "Activity generation completed successfully at $(date -u)"
